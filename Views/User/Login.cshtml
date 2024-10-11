@@ -1,0 +1,23 @@
+﻿@model LoginInfo
+@{
+	ViewData["Title"] = "Add New User";
+}
+<partial name="General" />
+<form method="post">
+	<div>
+		<label asp-for="Email"></label>
+		<input type="email" asp-for="Email" class="form-control" />
+		<span asp-validation-for="Email" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Password"></label>
+		<input type="password" asp-for="Password" class="form-control" />
+		<span asp-validation-for="Password" class="text-danger"></span>
+	</div>
+	<button type="submit" class="btn btn-outline-success">Login</button>
+</form>
+<a asp-action="Index" asp-controller="User" class="btn btn-danger">Cancel</a>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
+

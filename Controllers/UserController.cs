@@ -11,9 +11,11 @@ namespace Palmart.Controllers
 	public class UserController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
-        public UserController(IUnitOfWork unitOfWork)
+		private readonly ILoginRepo _loginRepo;
+        public UserController(IUnitOfWork unitOfWork, ILoginRepo loginRepo)
         {
             _unitOfWork = unitOfWork;
+			_loginRepo = loginRepo;
 
         }
         public async Task<IActionResult> Index()
@@ -28,17 +30,26 @@ namespace Palmart.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult New(User user)
 		{
-			Console.WriteLine("Wait...");
 			if (ModelState.IsValid)
 			{
-				Console.WriteLine("Wait...2...");
-
 				_unitOfWork.users.Insert(user);
-				Console.WriteLine("Done...!");
 				TempData["Success"] = "User Has Been Added Successfully";
 				return RedirectToAction("Index");
 			}
 			return View(user);
+		}
+		public  IActionResult Login(LoginInfo loginUser)
+		{
+			if (ModelState.IsValid)
+			{
+				var user =  _loginRepo.GetByEmail(loginUser.Email);
+				if(user.Email==loginUser.Email && user.Password==loginUser.Password)
+				{ 
+					return RedirectToAction("Index"); 
+				}
+			}
+			ModelState.AddModelError("Incorrect", "Email or Password is Incorrect");
+			return View();
 		}
 		public async Task<IActionResult> Edit(int id=0)
 		{

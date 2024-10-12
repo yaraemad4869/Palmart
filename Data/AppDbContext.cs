@@ -26,6 +26,7 @@ namespace Palmart.Data
 			modelBuilder.Entity<Review>().ToTable("Review");
 			modelBuilder.Entity<Payment>().ToTable("Payment");
 			modelBuilder.Entity<Wishlist>().ToTable("Wishlist");
+			modelBuilder.Entity<Contact>().ToTable("Contact");
 			
 
 			modelBuilder.Entity<Product>().ToTable("Product");  // Base class mapped to the "Products" table
@@ -87,8 +88,20 @@ namespace Palmart.Data
 				.WithMany(p => p.reports)
 				.HasForeignKey(r => r.ProductID);
 
-			#region User Data
-			modelBuilder.Entity<User>()
+            modelBuilder.Entity<EmployeeContact>().HasKey(ec => new { ec.ContactID,ec.EmpID });
+            modelBuilder.Entity<EmployeeContact>()
+           .HasOne(ec => ec.contact)
+           .WithMany(c => c.employeeContacts)
+           .HasForeignKey(ec => ec.ContactID);
+
+            modelBuilder.Entity<EmployeeContact>()
+                .HasOne(ec => ec.employee)
+                .WithMany(e => e.employeeContacts)
+                .HasForeignKey(ec => ec.EmpID);
+
+
+            #region User Data
+            modelBuilder.Entity<User>()
 				.HasData(
 					new User { ID = 1, FName = "Yara", LName = "Emad Eldien", Username = "Yara_Emad4869", PhoneNumber = "+201127769084", Email = "Yara.Emad4869@gmail.com", Password = "YaraEmad4869", Gender = Gender.Female, UserType = UserType.Client, Address = "Al-Rawda Street, Off the Nile Courniche, Beni Suef" }
 				);

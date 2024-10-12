@@ -24,5 +24,7 @@ namespace Palmart.Models
 		public DateTime HiringDate { get; set; }
 		public ICollection<Order>? orders { get; set; }
 		public ICollection<Brand>? brands { get; set; }
-	}
+        public ICollection<EmployeeContact>? employeeContacts { get; set; }
+
+    }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Palmart.Migrations
 {
     /// <inheritdoc />
-    public partial class PalmartV2 : Migration
+    public partial class PalmartV1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -105,6 +105,26 @@ namespace Palmart.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Contact",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contact", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Contact_User_UserID",
+                        column: x => x.UserID,
+                        principalTable: "User",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Order",
                 columns: table => new
                 {
@@ -181,6 +201,30 @@ namespace Palmart.Migrations
                         name: "FK_Product_Brand_BrandID",
                         column: x => x.BrandID,
                         principalTable: "Brand",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeContact",
+                columns: table => new
+                {
+                    ContactID = table.Column<int>(type: "int", nullable: false),
+                    EmpID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeContact", x => new { x.ContactID, x.EmpID });
+                    table.ForeignKey(
+                        name: "FK_EmployeeContact_Contact_ContactID",
+                        column: x => x.ContactID,
+                        principalTable: "Contact",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EmployeeContact_Employee_EmpID",
+                        column: x => x.EmpID,
+                        principalTable: "Employee",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -423,7 +467,7 @@ namespace Palmart.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "ID", "Address", "Email", "FName", "Gender", "LName", "Password", "PhoneNumber", "RegistrationDate", "UserType", "Username" },
-                values: new object[] { 1, "Al-Rawda Street, Off the Nile Courniche, Beni Suef", "Yara.Emad4869@gmail.com", "Yara", 1, "Emad Eldien", "YaraEmad4869", "+201127769084", new DateTime(2024, 10, 11, 9, 46, 19, 738, DateTimeKind.Local).AddTicks(160), 0, "Yara_Emad4869" });
+                values: new object[] { 1, "Al-Rawda Street, Off the Nile Courniche, Beni Suef", "Yara.Emad4869@gmail.com", "Yara", 1, "Emad Eldien", "YaraEmad4869", "+201127769084", new DateTime(2024, 10, 12, 5, 34, 6, 475, DateTimeKind.Local).AddTicks(8259), 0, "Yara_Emad4869" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Brand_EmpID",
@@ -436,9 +480,19 @@ namespace Palmart.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Contact_UserID",
+                table: "Contact",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DiscountProduct_ProductID",
                 table: "DiscountProduct",
                 column: "ProductID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeContact_EmpID",
+                table: "EmployeeContact",
+                column: "EmpID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_EmpID",
@@ -491,6 +545,9 @@ namespace Palmart.Migrations
                 name: "DiscountProduct");
 
             migrationBuilder.DropTable(
+                name: "EmployeeContact");
+
+            migrationBuilder.DropTable(
                 name: "OrderProduct");
 
             migrationBuilder.DropTable(
@@ -510,6 +567,9 @@ namespace Palmart.Migrations
 
             migrationBuilder.DropTable(
                 name: "Discount");
+
+            migrationBuilder.DropTable(
+                name: "Contact");
 
             migrationBuilder.DropTable(
                 name: "Order");

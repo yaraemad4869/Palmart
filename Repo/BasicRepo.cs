@@ -23,7 +23,7 @@ namespace Palmart.Repo
 		{
 			return await _db.Set<T>().FindAsync(id);
 		}
-
+		
 		public async void Insert(T entity)
 		{
 			await _db.Set<T>().AddAsync(entity);

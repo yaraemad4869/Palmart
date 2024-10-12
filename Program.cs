@@ -12,6 +12,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 //builder.Services.AddScoped(typeof(BasicRepo<>), typeof(BasicRepo<>)); // Register generic repository
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped(typeof(ILoginRepo), typeof(LoginRepo));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

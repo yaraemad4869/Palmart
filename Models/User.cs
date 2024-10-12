@@ -43,6 +43,8 @@ namespace Palmart.Models
         public ICollection<Order>? orders { get; set; }
         public ICollection<Payment>? payment { get; set; }
         public ICollection<Brand>? brands { get; set; }
+        public ICollection<Contact>? contacts { get; set; }
+
 
     }
 }

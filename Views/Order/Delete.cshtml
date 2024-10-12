@@ -1,0 +1,38 @@
+﻿@model Order
+@{
+	ViewData["Title"] = "Delete Order";
+}
+<form method="post" asp-action="Delete">
+	<input asp-for="ID" hidden />
+	<input asp-for="OrderDate" hidden />
+
+	<div>
+		<label asp-for="OrderPrice"></label>
+		<input asp-for="OrderPrice" class="form-control" disabled />
+		<span asp-validation-for="OrderPrice" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="DeliveryFee"></label>
+		<input asp-for="DeliveryFee" class="form-control" disabled />
+		<span asp-validation-for="DeliveryFee" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="DiscountCode"></label>
+		<input asp-for="DiscountCode" class="form-control" disabled />
+		<span asp-validation-for="DiscountCode" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="OrderAddress"></label>
+		<input asp-for="OrderAddress" class="form-control" disabled />
+		<span asp-validation-for="OrderAddress" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="OrderStatus"></label>
+		<input asp-for="OrderStatus" class="form-control" disabled />
+		<span asp-validation-for="OrderStatus" class="text-danger"></span>
+	</div>
+	
+	<button type="submit" class="btn btn-outline-success">Delete</button>
+</form>
+<a asp-action="Index" asp-controller="User" class="btn btn-danger">Cancel</a>
+

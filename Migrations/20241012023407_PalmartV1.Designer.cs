@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Palmart.Data;
 
@@ -11,9 +12,11 @@ using Palmart.Data;
 namespace Palmart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241012023407_PalmartV1")]
+    partial class PalmartV1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -876,13 +879,7 @@ namespace Palmart.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserID")
                         .HasColumnType("int");
@@ -1249,7 +1246,7 @@ namespace Palmart.Migrations
                             LName = "Emad Eldien",
                             Password = "YaraEmad4869",
                             PhoneNumber = "+201127769084",
-                            RegistrationDate = new DateTime(2024, 10, 12, 5, 48, 27, 245, DateTimeKind.Local).AddTicks(9232),
+                            RegistrationDate = new DateTime(2024, 10, 12, 5, 34, 6, 475, DateTimeKind.Local).AddTicks(8259),
                             UserType = 0,
                             Username = "Yara_Emad4869"
                         });

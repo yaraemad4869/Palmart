@@ -12,8 +12,8 @@ using Palmart.Data;
 namespace Palmart.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241011064625_PalmartV2")]
-    partial class PalmartV2
+    [Migration("20241012024828_ContactEdit")]
+    partial class ContactEdit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -869,6 +869,34 @@ namespace Palmart.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Palmart.Models.Contact", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Contact", (string)null);
+                });
+
             modelBuilder.Entity("Palmart.Models.Discount", b =>
                 {
                     b.Property<int>("ID")
@@ -956,6 +984,21 @@ namespace Palmart.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Employee", (string)null);
+                });
+
+            modelBuilder.Entity("Palmart.Models.EmployeeContact", b =>
+                {
+                    b.Property<int>("ContactID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmpID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContactID", "EmpID");
+
+                    b.HasIndex("EmpID");
+
+                    b.ToTable("EmployeeContact");
                 });
 
             modelBuilder.Entity("Palmart.Models.Order", b =>
@@ -1209,7 +1252,7 @@ namespace Palmart.Migrations
                             LName = "Emad Eldien",
                             Password = "YaraEmad4869",
                             PhoneNumber = "+201127769084",
-                            RegistrationDate = new DateTime(2024, 10, 11, 9, 46, 19, 738, DateTimeKind.Local).AddTicks(160),
+                            RegistrationDate = new DateTime(2024, 10, 12, 5, 48, 27, 245, DateTimeKind.Local).AddTicks(9232),
                             UserType = 0,
                             Username = "Yara_Emad4869"
                         });
@@ -1292,6 +1335,14 @@ namespace Palmart.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("Palmart.Models.Contact", b =>
+                {
+                    b.HasOne("Palmart.Models.User", null)
+                        .WithMany("contacts")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("Palmart.Models.DiscountProduct", b =>
                 {
                     b.HasOne("Palmart.Models.Discount", "discount")
@@ -1309,6 +1360,25 @@ namespace Palmart.Migrations
                     b.Navigation("discount");
 
                     b.Navigation("product");
+                });
+
+            modelBuilder.Entity("Palmart.Models.EmployeeContact", b =>
+                {
+                    b.HasOne("Palmart.Models.Contact", "contact")
+                        .WithMany("employeeContacts")
+                        .HasForeignKey("ContactID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Palmart.Models.Employee", "employee")
+                        .WithMany("employeeContacts")
+                        .HasForeignKey("EmpID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("contact");
+
+                    b.Navigation("employee");
                 });
 
             modelBuilder.Entity("Palmart.Models.Order", b =>
@@ -1451,6 +1521,11 @@ namespace Palmart.Migrations
                     b.Navigation("products");
                 });
 
+            modelBuilder.Entity("Palmart.Models.Contact", b =>
+                {
+                    b.Navigation("employeeContacts");
+                });
+
             modelBuilder.Entity("Palmart.Models.Discount", b =>
                 {
                     b.Navigation("discountProducts");
@@ -1459,6 +1534,8 @@ namespace Palmart.Migrations
             modelBuilder.Entity("Palmart.Models.Employee", b =>
                 {
                     b.Navigation("brands");
+
+                    b.Navigation("employeeContacts");
 
                     b.Navigation("orders");
                 });
@@ -1484,6 +1561,8 @@ namespace Palmart.Migrations
             modelBuilder.Entity("Palmart.Models.User", b =>
                 {
                     b.Navigation("brands");
+
+                    b.Navigation("contacts");
 
                     b.Navigation("orders");
 

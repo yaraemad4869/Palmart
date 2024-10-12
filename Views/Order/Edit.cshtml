@@ -1,7 +1,11 @@
 ﻿@model User
-
-<partial name="General" />
-<form method="post">
+@{
+	ViewData["Title"] = "Edit User";
+}
+<form method="post" asp-action="Edit">
+	<input asp-for="ID" hidden />
+	<input asp-for="RegistrationDate" hidden />
+	<input asp-for="UserType" hidden />
 	<div>
 		<label asp-for="FName"></label>
 		<input asp-for="FName" class="form-control" />
@@ -19,17 +23,17 @@
 	</div>
 	<div>
 		<label asp-for="PhoneNumber"></label>
-		<input type="tel" asp-for="PhoneNumber" class="form-control" />
+		<input asp-for="PhoneNumber" class="form-control" />
 		<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 	</div>
 	<div>
 		<label asp-for="Email"></label>
-		<input type="email" asp-for="Email" class="form-control" />
+		<input asp-for="Email" class="form-control" />
 		<span asp-validation-for="Email" class="text-danger"></span>
 	</div>
 	<div>
 		<label asp-for="Password"></label>
-		<input type="password" asp-for="Password" class="form-control" />
+		<input asp-for="Password" class="form-control" />
 		<span asp-validation-for="Password" class="text-danger"></span>
 	</div>
 	<div>
@@ -45,10 +49,9 @@
 		<input asp-for="Address" class="form-control" />
 		<span asp-validation-for="Address" class="text-danger"></span>
 	</div>
-	<partial name="SubmitButton" />
-	@* <button type="submit" class="btn btn-outline-success">Submit</button> *@
+	<button type="submit" class="btn btn-outline-success">Submit</button>
 </form>
 <a asp-action="Index" asp-controller="User" class="btn btn-danger">Cancel</a>
-@section Scripts{
+@section Scripts {
 	<partial name="_ValidationScriptsPartial" />
 }

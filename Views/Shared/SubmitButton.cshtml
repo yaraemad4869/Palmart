@@ -3,12 +3,15 @@
 
 	@if(true)
 	{
+	ViewData["Title"] = "Sign up";
+		<h5><input type="checkbox" required /> Accept all the terms</h5>
 		<button type="submit">Sign up</button>
 		<button type="button"><a asp-action="Index" asp-controller="Home">Cancel</a></button>
 		<a asp-action="Login" asp-controller="User">Don't have an account?</a>
 	}
 	else
 	{
+	ViewData["Title"] = "Add New User";
 		<button type="submit">Add</button>
 		<button type="button"><a asp-action="Index" asp-controller="User">Cancel</a></button>
 	}

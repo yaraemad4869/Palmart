@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Order\Delete.cshtml" />
     <Content Remove="Views\User\Delete.cshtml" />
   </ItemGroup>
 
@@ -29,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Order\Delete.cshtml" />
     <None Include="Views\User\Delete.cshtml" />
   </ItemGroup>
 

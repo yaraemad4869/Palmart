@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@model LoginInfo
 @{
 	ViewData["Title"] = "Login";
@@ -21,3 +22,28 @@
 	<partial name="_ValidationScriptsPartial" />
 }
 
+=======
+﻿@model LoginInfo
+@{
+	ViewData["Title"] = "Add New User";
+}
+<partial name="General" />
+<form method="post">
+	<div>
+		<label asp-for="Email"></label>
+		<input type="email" asp-for="Email" class="form-control" />
+		<span asp-validation-for="Email" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Password"></label>
+		<input type="password" asp-for="Password" class="form-control" />
+		<span asp-validation-for="Password" class="text-danger"></span>
+	</div>
+	<button type="submit" class="btn btn-outline-success">Login</button>
+</form>
+<a asp-action="Index" asp-controller="User" class="btn btn-danger">Cancel</a>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
+
+>>>>>>> e14596fa2815c3abeeab24a806a31c2f1350cfcd
